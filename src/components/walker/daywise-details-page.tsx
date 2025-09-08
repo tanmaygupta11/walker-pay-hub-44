@@ -94,6 +94,7 @@ export function DaywiseDetailsPage({ onBack, onProceed }: DaywiseDetailsPageProp
               <PayoutBreakdown 
                 detail={getSelectedDayData()!}
                 title={getDetailsTitle()}
+                showTdsInfo={false}
               />
               
               <div className="flex gap-4 justify-center">

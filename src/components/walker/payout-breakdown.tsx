@@ -20,6 +20,7 @@ import {
 interface PayoutBreakdownProps {
   detail: PayoutDetail;
   title?: string;
+  showTdsInfo?: boolean;
 }
 
 interface PayoutItemProps {
@@ -67,7 +68,7 @@ function PayoutItem({ icon, label, value, type = 'default', suffix = '' }: Payou
   );
 }
 
-export function PayoutBreakdown({ detail, title }: PayoutBreakdownProps) {
+export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBreakdownProps) {
   const totalRewards = detail.otPayout + detail.walkerOrderFulfilment + 
                       detail.onTimeLoginReward + detail.bestRankedStationReward + 
                       detail.festiveIncentives;
@@ -217,54 +218,56 @@ export function PayoutBreakdown({ detail, title }: PayoutBreakdownProps) {
       </Card>
 
       {/* TDS Amount Section */}
-      <Card className="card-elevated">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-primary" />
-            TDS Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <PayoutItem
-            icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
-            label="Total Earning in FY"
-            value={detail.totalEarningFY}
-          />
-          <PayoutItem
-            icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
-            label="Base Payout"
-            value={detail.basePayout}
-          />
-          <PayoutItem
-            icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
-            label="Total Earning Including This Month"
-            value={detail.totalEarningIncludingThisMonth}
-          />
-          <div className="flex items-center justify-between p-4 rounded-lg border transition-smooth text-foreground border-card-border bg-card">
-            <div className="flex items-center gap-3">
+      {showTdsInfo && (
+        <Card className="card-elevated">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
               <Calculator className="w-5 h-5 text-primary" />
-              <span className="font-medium">TDS Applicable</span>
+              TDS Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <PayoutItem
+              icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
+              label="Total Earning in FY"
+              value={detail.totalEarningFY}
+            />
+            <PayoutItem
+              icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
+              label="Base Payout"
+              value={detail.basePayout}
+            />
+            <PayoutItem
+              icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
+              label="Total Earning Including This Month"
+              value={detail.totalEarningIncludingThisMonth}
+            />
+            <div className="flex items-center justify-between p-4 rounded-lg border transition-smooth text-foreground border-card-border bg-card">
+              <div className="flex items-center gap-3">
+                <Calculator className="w-5 h-5 text-primary" />
+                <span className="font-medium">TDS Applicable</span>
+              </div>
+              <span className="font-semibold">{detail.tdsApplicable ? 'Yes' : 'No'}</span>
             </div>
-            <span className="font-semibold">{detail.tdsApplicable ? 'Yes' : 'No'}</span>
-          </div>
-          {detail.tdsApplicable && (
-            <>
-              <PayoutItem
-                icon={<Calculator className="w-5 h-5 text-warning" />}
-                label="TDS Amount"
-                value={detail.tdsAmount}
-                type="deduction"
-              />
-              <PayoutItem
-                icon={<span className="w-5 h-5 text-success flex items-center justify-center font-bold">₹</span>}
-                label="Salary After TDS"
-                value={salaryAfterTDS}
-                type="reward"
-              />
-            </>
-          )}
-        </CardContent>
-      </Card>
+            {detail.tdsApplicable && (
+              <>
+                <PayoutItem
+                  icon={<Calculator className="w-5 h-5 text-warning" />}
+                  label="TDS Amount"
+                  value={detail.tdsAmount}
+                  type="deduction"
+                />
+                <PayoutItem
+                  icon={<span className="w-5 h-5 text-success flex items-center justify-center font-bold">₹</span>}
+                  label="Salary After TDS"
+                  value={salaryAfterTDS}
+                  type="reward"
+                />
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Total Calculation */}
       <Card className="card-payout">
