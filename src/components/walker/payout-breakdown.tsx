@@ -232,6 +232,11 @@ export function PayoutBreakdown({ detail, title }: PayoutBreakdownProps) {
           />
           <PayoutItem
             icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
+            label="Base Payout"
+            value={detail.basePayout}
+          />
+          <PayoutItem
+            icon={<span className="w-5 h-5 text-primary flex items-center justify-center font-bold">₹</span>}
             label="Total Earning Including This Month"
             value={detail.totalEarningIncludingThisMonth}
           />
