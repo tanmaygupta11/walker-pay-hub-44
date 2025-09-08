@@ -74,7 +74,7 @@ export function PayoutBreakdown({ detail, title }: PayoutBreakdownProps) {
                       
   const totalDeductions = detail.assetDeduction;
   const totalPenalties = detail.cancellationAmount + detail.walkerLateLogin;
-  const salaryAfterTDS = detail.basePayout - detail.tdsAmount;
+  const salaryAfterTDS = detail.tdsApplicable ? detail.basePayout - detail.tdsAmount : detail.basePayout;
   const totalPayout = calculateTotalPayout(detail);
 
   return (
@@ -275,7 +275,7 @@ export function PayoutBreakdown({ detail, title }: PayoutBreakdownProps) {
                 {detail.tdsApplicable ? 'Salary After TDS:' : 'Base Payout:'}
               </span>
               <span className="font-semibold">
-                ₹{(detail.tdsApplicable ? salaryAfterTDS : detail.basePayout).toLocaleString()}
+                ₹{salaryAfterTDS.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between items-center text-lg text-success">

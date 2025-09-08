@@ -128,7 +128,7 @@ export const calculateTotalPayout = (detail: PayoutDetail): number => {
                  
   const deductions = detail.assetDeduction;
   const penalties = detail.cancellationAmount + detail.walkerLateLogin;
-  const salaryAfterTDS = detail.basePayout - detail.tdsAmount;
+  const salaryAfterTDS = detail.tdsApplicable ? detail.basePayout - detail.tdsAmount : detail.basePayout;
                      
   return salaryAfterTDS + rewards - deductions - penalties;
 };
