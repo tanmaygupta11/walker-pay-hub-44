@@ -4,13 +4,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, BarChart3, Calendar, TrendingUp } from "lucide-react";
-<<<<<<< HEAD
 import { DetailType } from "@/types/walker";
 import { generateBillingCyclesForYear } from "@/lib/billing-cycles";
-=======
-import { BillingCycle, DetailType } from "@/types/walker";
-import { BILLING_CYCLES } from "@/data/mockData";
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 
 interface PayoutSelectionProps {
   selectedBillingCycle: string;
@@ -31,12 +26,9 @@ export function PayoutSelection({
 }: PayoutSelectionProps) {
   const canProceed = selectedBillingCycle && selectedDetailType;
 
-<<<<<<< HEAD
   const year = new Date().getFullYear();
   const cycles = generateBillingCyclesForYear(year);
 
-=======
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <Card className="card-elevated">
@@ -55,13 +47,8 @@ export function PayoutSelection({
               <SelectValue placeholder="Select billing cycle" />
             </SelectTrigger>
             <SelectContent>
-<<<<<<< HEAD
               {cycles.map((cycle) => (
                 <SelectItem key={cycle.label} value={cycle.label}>
-=======
-              {BILLING_CYCLES.map((cycle) => (
-                <SelectItem key={cycle.id} value={cycle.id}>
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
                   {cycle.label}
                 </SelectItem>
               ))}

@@ -23,7 +23,6 @@ export const VERIFIED_WALKERS: WalkerDetails[] = [
 ];
 
 export const BILLING_CYCLES: BillingCycle[] = [
-<<<<<<< HEAD
   { id: 'bc2025_01', label: 'January 2025 (21 Dec - 20 Jan)', startDate: '2024-12-21', endDate: '2025-01-20' },
   { id: 'bc2025_02', label: 'February 2025 (21 Jan - 20 Feb)', startDate: '2025-01-21', endDate: '2025-02-20' },
   { id: 'bc2025_03', label: 'March 2025 (21 Feb - 20 Mar)', startDate: '2025-02-21', endDate: '2025-03-20' },
@@ -36,26 +35,6 @@ export const BILLING_CYCLES: BillingCycle[] = [
   { id: 'bc2025_10', label: 'October 2025 (21 Sep - 20 Oct)', startDate: '2025-09-21', endDate: '2025-10-20' },
   { id: 'bc2025_11', label: 'November 2025 (21 Oct - 20 Nov)', startDate: '2025-10-21', endDate: '2025-11-20' },
   { id: 'bc2025_12', label: 'December 2025 (21 Nov - 20 Dec)', startDate: '2025-11-21', endDate: '2025-12-20' }
-=======
-  {
-    id: 'bc001',
-    label: 'January 2024 (1st - 31st)',
-    startDate: '2024-01-01',
-    endDate: '2024-01-31'
-  },
-  {
-    id: 'bc002',
-    label: 'February 2024 (1st - 29th)',
-    startDate: '2024-02-01',
-    endDate: '2024-02-29'
-  },
-  {
-    id: 'bc003',
-    label: 'March 2024 (1st - 31st)',
-    startDate: '2024-03-01',
-    endDate: '2024-03-31'
-  }
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 ];
 
 export const STATION_NAMES = [

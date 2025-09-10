@@ -146,7 +146,6 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
-<<<<<<< HEAD
 
   /* Responsive base font sizing: mobile-first
      - Mobile (<640px): 14px
@@ -159,8 +158,6 @@
   @screen md { html { font-size: 17px; } }
   @screen lg { html { font-size: 18px; } }
   @screen xl { html { font-size: 18px; } }
-=======
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
   
   /* Utility classes */
   .text-gradient-primary {

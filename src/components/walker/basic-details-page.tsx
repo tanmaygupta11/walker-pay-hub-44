@@ -78,12 +78,6 @@ export function BasicDetailsPage({ walkerData, onProceed, onBack }: BasicDetails
               <Button variant="outline" onClick={onBack} className="flex-1">
                 Back
               </Button>
-<<<<<<< HEAD
-=======
-              <Button onClick={onProceed} className="flex-1">
-                Proceed to Payout Details
-              </Button>
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
             </div>
           </CardContent>
         </Card>

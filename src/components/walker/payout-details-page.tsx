@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
-=======
-import { useState } from "react";
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PayoutBreakdown } from "./payout-breakdown";
-<<<<<<< HEAD
 import { Calendar, ChevronLeft, User, Hash, Phone, MapPin } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -18,16 +13,11 @@ import { cn } from "@/lib/utils";
 import { MOCK_AGGREGATE_PAYOUT, MOCK_DAYWISE_DATA } from "@/data/mockData";
 import { generateBillingCyclesForYear } from "@/lib/billing-cycles";
 import { format } from "date-fns";
-=======
-import { Calendar, ChevronLeft } from "lucide-react";
-import { MOCK_AGGREGATE_PAYOUT } from "@/data/mockData";
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 
 interface PayoutDetailsPageProps {
   onBack: () => void;
   onViewDaywise: () => void;
   onProceed: () => void;
-<<<<<<< HEAD
   // kept optional for compatibility with previous version
   selectedBillingCycle?: string;
   setSelectedBillingCycle?: (value: string) => void;
@@ -86,18 +76,6 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
       setSelectedDate(yesterday);
     }
   }, [selectedView, selectedDate]);
-=======
-}
-
-export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed }: PayoutDetailsPageProps) {
-  const [selectedBillingCycle, setSelectedBillingCycle] = useState("");
-
-  const billingCycles = [
-    { id: "2024-01", label: "January 2024 (1st - 31st Jan)" },
-    { id: "2023-12", label: "December 2023 (1st - 31st Dec)" },
-    { id: "2023-11", label: "November 2023 (1st - 30th Nov)" },
-  ];
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 
   return (
     <div className="min-h-screen bg-background">
@@ -119,7 +97,6 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed }: PayoutDe
           </p>
         </div>
 
-<<<<<<< HEAD
         {/* Walker Basic Information (compact) */}
         {walkerData && (
           <Card className="mb-6">
@@ -192,32 +169,16 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed }: PayoutDe
             <div>
               <Select value={selectedBillingCycle} onValueChange={setSelectedBillingCycle}>
                 <SelectTrigger className="h-12 text-base sm:text-lg">
-=======
-        <div className="space-y-6">
-          {/* Billing Cycle Selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Select Billing Cycle</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Select value={selectedBillingCycle} onValueChange={setSelectedBillingCycle}>
-                <SelectTrigger>
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
                   <SelectValue placeholder="Choose billing cycle" />
                 </SelectTrigger>
                 <SelectContent>
                   {billingCycles.map((cycle) => (
-<<<<<<< HEAD
                     <SelectItem key={cycle.label} value={cycle.label} className="text-base sm:text-lg">
-=======
-                    <SelectItem key={cycle.id} value={cycle.id}>
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
                       {cycle.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-<<<<<<< HEAD
             </div>
           ) : (
             <div>
@@ -274,45 +235,6 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed }: PayoutDe
               Continue
             </Button>
           </div>
-=======
-            </CardContent>
-          </Card>
-
-          {/* Day-wise Option */}
-          {selectedBillingCycle && (
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Aggregate Payout Details</h2>
-              <Button 
-                variant="outline" 
-                onClick={onViewDaywise}
-                className="flex items-center gap-2"
-              >
-                <Calendar className="w-4 h-4" />
-                View Day-wise Details
-              </Button>
-            </div>
-          )}
-
-          {/* Payout Breakdown */}
-          {selectedBillingCycle && (
-            <>
-              <PayoutBreakdown 
-                detail={MOCK_AGGREGATE_PAYOUT}
-                title="Aggregate Payout Details"
-              />
-              
-              <div className="flex gap-4 justify-center">
-                <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
-                  <ChevronLeft className="w-4 h-4" />
-                  Back
-                </Button>
-                <Button onClick={onProceed}>
-                  Continue
-                </Button>
-              </div>
-            </>
-          )}
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
         </div>
       </div>
     </div>

@@ -10,20 +10,12 @@ import { cn } from "@/lib/utils";
 import { MOCK_DAYWISE_DATA } from "@/data/mockData";
 
 interface DaywiseDetailsPageProps {
-<<<<<<< HEAD
   onBack?: () => void;
   onBackWithState?: (state: { scrollY: number }) => void;
   onProceed: () => void;
 }
 
 export function DaywiseDetailsPage({ onBack, onBackWithState, onProceed }: DaywiseDetailsPageProps) {
-=======
-  onBack: () => void;
-  onProceed: () => void;
-}
-
-export function DaywiseDetailsPage({ onBack, onProceed }: DaywiseDetailsPageProps) {
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
   const [selectedDate, setSelectedDate] = useState<Date>();
 
   const getSelectedDayData = () => {
@@ -94,7 +86,6 @@ export function DaywiseDetailsPage({ onBack, onProceed }: DaywiseDetailsPageProp
                   />
                 </PopoverContent>
               </Popover>
-<<<<<<< HEAD
 
               {/* Back button placed immediately after the date dropdown */}
               <div className="mt-4">
@@ -106,8 +97,6 @@ export function DaywiseDetailsPage({ onBack, onProceed }: DaywiseDetailsPageProp
                   Back
                 </Button>
               </div>
-=======
->>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
             </CardContent>
           </Card>
 
