@@ -14,11 +14,18 @@ type Step = 'login' | 'basic-details' | 'payout-details' | 'daywise-details' | '
 export function WalkerPortal() {
   const [currentStep, setCurrentStep] = useState<Step>('login');
   const [walkerData, setWalkerData] = useState<WalkerDetails | null>(null);
+<<<<<<< HEAD
   const [selectedBillingCycle, setSelectedBillingCycle] = useState<string>("");
 
   const handleLoginSuccess = (data: WalkerDetails) => {
     setWalkerData(data);
     setCurrentStep('payout-details');
+=======
+
+  const handleLoginSuccess = (data: WalkerDetails) => {
+    setWalkerData(data);
+    setCurrentStep('basic-details');
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
   };
 
   const handleBackToHome = () => {
@@ -32,6 +39,7 @@ export function WalkerPortal() {
         <LoginPage onLoginSuccess={handleLoginSuccess} />
       )}
 
+<<<<<<< HEAD
       {currentStep === 'basic-details' && walkerData && null}
 
       {currentStep === 'payout-details' && (
@@ -42,13 +50,31 @@ export function WalkerPortal() {
           selectedBillingCycle={selectedBillingCycle}
           setSelectedBillingCycle={setSelectedBillingCycle}
           walkerData={walkerData}
+=======
+      {currentStep === 'basic-details' && walkerData && (
+        <BasicDetailsPage
+          walkerData={walkerData}
+          onProceed={() => setCurrentStep('payout-details')}
+          onBack={() => setCurrentStep('login')}
+        />
+      )}
+
+      {currentStep === 'payout-details' && (
+        <PayoutDetailsPage
+          onBack={() => setCurrentStep('basic-details')}
+          onViewDaywise={() => setCurrentStep('daywise-details')}
+          onProceed={() => setCurrentStep('verification')}
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
         />
       )}
 
       {currentStep === 'daywise-details' && (
         <DaywiseDetailsPage
           onBack={() => setCurrentStep('payout-details')}
+<<<<<<< HEAD
           onBackWithState={() => setCurrentStep('payout-details')}
+=======
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
           onProceed={() => setCurrentStep('verification')}
         />
       )}
@@ -57,7 +83,11 @@ export function WalkerPortal() {
         <VerificationDialog
           onBack={() => setCurrentStep('payout-details')}
           onYes={() => setCurrentStep('confirmation')}
+<<<<<<< HEAD
           onConcernSubmitted={() => setCurrentStep('concern-submitted')}
+=======
+          onNo={() => setCurrentStep('walker-concern')}
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
         />
       )}
 

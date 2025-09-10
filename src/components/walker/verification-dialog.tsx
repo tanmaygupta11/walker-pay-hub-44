@@ -3,13 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+<<<<<<< HEAD
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle, XCircle, ChevronLeft, MessageSquare } from "lucide-react";
+=======
+import { CheckCircle, XCircle, ChevronLeft } from "lucide-react";
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 
 interface VerificationDialogProps {
   onBack: () => void;
   onYes: () => void;
+<<<<<<< HEAD
   onConcernSubmitted: () => void;
 }
 
@@ -34,12 +39,23 @@ export function VerificationDialog({ onBack, onYes, onConcernSubmitted }: Verifi
       setSelectedConcerns(selectedConcerns.filter(id => id !== concernId));
     }
   };
+=======
+  onNo: () => void;
+}
+
+export function VerificationDialog({ onBack, onYes, onNo }: VerificationDialogProps) {
+  const [satisfaction, setSatisfaction] = useState<'yes' | 'no' | ''>('');
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
 
   const handleProceed = () => {
     if (satisfaction === 'yes') {
       onYes();
     } else if (satisfaction === 'no') {
+<<<<<<< HEAD
       onConcernSubmitted();
+=======
+      onNo();
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
     }
   };
 
@@ -98,6 +114,7 @@ export function VerificationDialog({ onBack, onYes, onConcernSubmitted }: Verifi
                 </Label>
               </div>
             </RadioGroup>
+<<<<<<< HEAD
             {satisfaction === 'no' && (
               <div className="space-y-6">
                 <Card>
@@ -146,6 +163,9 @@ export function VerificationDialog({ onBack, onYes, onConcernSubmitted }: Verifi
               </div>
             )}
 
+=======
+            
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
             <div className="flex gap-4 pt-4">
               <Button variant="outline" onClick={onBack} className="flex-1 flex items-center gap-2">
                 <ChevronLeft className="w-4 h-4" />
@@ -153,7 +173,11 @@ export function VerificationDialog({ onBack, onYes, onConcernSubmitted }: Verifi
               </Button>
               <Button 
                 onClick={handleProceed}
+<<<<<<< HEAD
                 disabled={!satisfaction || (satisfaction === 'no' && !description.trim() && selectedConcerns.length === 0)}
+=======
+                disabled={!satisfaction}
+>>>>>>> dcf3ddfc010611596681cae27ad1869038839c93
                 className="flex-1"
               >
                 Proceed
