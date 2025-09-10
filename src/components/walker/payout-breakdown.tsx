@@ -114,7 +114,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
         <Card className="card-elevated border-2 border-dashed" style={{borderColor: '#3A11BC', backgroundColor: '#937DEC'}}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-bold text-white">TDS</CardTitle>
+              <CardTitle className="text-xl font-bold text-black">TDS</CardTitle>
               {detail.tdsApplicable && (
                 <Badge className="text-white border-white/20" style={{backgroundColor: '#3A11BC'}}>
                   TDS Applicable
@@ -124,10 +124,10 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-lg text-white">₹{detail.totalEarningFY.toLocaleString()}</span>
-              <span className="text-lg text-white">₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
+              <span className="text-xl font-bold text-black">₹{detail.totalEarningFY.toLocaleString()}</span>
+              <span className="text-xl font-bold text-black">₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
             </div>
-            <div className="flex items-center justify-between text-sm text-white/80">
+            <div className="flex items-center justify-between text-sm text-black">
               <span>Total Earnings in FY</span>
               <span>Total Earnings (Including this month)</span>
             </div>
