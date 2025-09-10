@@ -91,7 +91,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
       {/* Activity Details */}
       <Card className="card-elevated">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">Activity Details</CardTitle>
+          <CardTitle className="text-2xl font-bold">Activity Details</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-3 gap-4 text-center">
           <div>
