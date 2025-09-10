@@ -111,7 +111,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
 
       {/* TDS Section */}
       {showTdsInfo && (
-        <Card className="card-elevated border-2 border-dashed" style={{borderColor: '#3A11BC', backgroundColor: '#937DEC'}}>
+        <Card className="card-elevated border-2 border-dashed" style={{borderColor: '#3A11BC', backgroundColor: '#bcabff'}}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-bold text-black">TDS</CardTitle>
