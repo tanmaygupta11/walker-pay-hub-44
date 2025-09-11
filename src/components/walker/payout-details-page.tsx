@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PayoutBreakdown } from "./payout-breakdown";
+import { BillingCyclePayoutBreakdown } from "./billing-cycle-payout-breakdown";
+import { DayWisePayoutBreakdown } from "./daywise-payout-breakdown";
 import { Calendar, ChevronLeft, User, Hash, Phone, MapPin } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -208,7 +209,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
               {/* Inline Day-wise Details */}
               {selectedDate && getSelectedDayData() && (
                 <div className="mt-6">
-                  <PayoutBreakdown 
+                  <DayWisePayoutBreakdown 
                     detail={getSelectedDayData()!}
                     showTdsInfo={false}
                   />
@@ -220,7 +221,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
           {/* Payout Breakdown - Billing cycle only */}
           {selectedView === "billing" && selectedBillingCycle && (
             <>
-              <PayoutBreakdown 
+              <BillingCyclePayoutBreakdown 
                 detail={MOCK_AGGREGATE_PAYOUT}
               />
             </>
