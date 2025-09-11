@@ -25,6 +25,13 @@ export default {
           muted: "hsl(var(--primary-muted))",
           light: "hsl(var(--primary-light))",
         },
+        // Custom colors for the new design system
+        'primary-blue': '#325395',
+        'radio-active': '#113DBC',
+        'dropdown-text': '#3A4453',
+        'basic-subheading': '#8FA3A5',
+        'basic-value': '#313B4A',
+        'activity-heading': '#1F2D3D',
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -75,6 +82,16 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontSize: {
+        'payout-heading': '24px',
+        'basic-subheading': '12px',
+        'basic-value': '14px',
+        'select-payout': '16px',
+        'dropdown-content': '14.67px',
+        'activity-heading': '16px',
+        'payout-section-heading': '16px',
+        'payout-content': '14px',
       },
       keyframes: {
         "accordion-down": {

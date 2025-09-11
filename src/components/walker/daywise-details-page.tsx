@@ -48,7 +48,7 @@ export function DaywiseDetailsPage({ onBack, onBackWithState, onProceed }: Daywi
               className="h-12 w-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="payout-heading text-primary-blue mb-2">
             Day-wise Details
           </h1>
           <p className="text-muted-foreground">

@@ -49,7 +49,7 @@ export function WalkerConcernPage({ onBack, onSubmit }: WalkerConcernPageProps) 
               className="h-12 w-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="payout-heading text-primary-blue mb-2">
             Report Concern
           </h1>
           <p className="text-muted-foreground">

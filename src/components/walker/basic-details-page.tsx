@@ -26,7 +26,7 @@ export function BasicDetailsPage({ walkerData, onProceed, onBack }: BasicDetails
               className="h-12 w-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="payout-heading text-primary-blue mb-2">
             Walker Details
           </h1>
           <p className="text-muted-foreground">
@@ -44,32 +44,32 @@ export function BasicDetailsPage({ walkerData, onProceed, onBack }: BasicDetails
               <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                 <User className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Walker Name</p>
-                  <p className="font-semibold">{walkerData.walkerName}</p>
+                  <p className="basic-subheading">Walker Name</p>
+                  <p className="basic-value">{walkerData.walkerName}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                 <Hash className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">FE ID</p>
-                  <p className="font-semibold">{walkerData.feId}</p>
+                  <p className="basic-subheading">FE ID</p>
+                  <p className="basic-value">{walkerData.feId}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                 <Phone className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Walker Number</p>
-                  <p className="font-semibold">{walkerData.walkerNumber}</p>
+                  <p className="basic-subheading">Walker Number</p>
+                  <p className="basic-value">{walkerData.walkerNumber}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                 <MapPin className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Station Name</p>
-                  <p className="font-semibold">{walkerData.stationName}</p>
+                  <p className="basic-subheading">Station Name</p>
+                  <p className="basic-value">{walkerData.stationName}</p>
                 </div>
               </div>
             </div>

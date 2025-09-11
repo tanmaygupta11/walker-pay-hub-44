@@ -89,7 +89,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
               className="h-12 w-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="payout-heading text-primary-blue mb-2">
             Payout Details
           </h1>
           <p className="text-muted-foreground">
@@ -138,7 +138,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
         <div className="space-y-6">
           {/* Selection section: Billing cycle vs Day-wise */}
           <div className="space-y-3">
-            <div className="font-semibold text-lg sm:text-xl text-center">Select payout details based on</div>
+            <div className="select-payout-text text-center">Select payout details based on</div>
             <RadioGroup
               value={selectedView}
               onValueChange={(val) => setSelectedView(val as "billing" | "daywise")}
@@ -148,7 +148,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
                 <RadioGroupItem id="view-billing" value="billing" className="h-5 w-5" />
                 <Label
                   htmlFor="view-billing"
-                  className={(selectedView === "billing" ? "text-primary font-medium " : "") + "cursor-pointer text-base sm:text-lg"}
+                  className={(selectedView === "billing" ? "text-radio-active font-medium " : "") + "cursor-pointer text-base sm:text-lg"}
                 >
                   Billing cycle
                 </Label>
@@ -157,7 +157,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
                 <RadioGroupItem id="view-daywise" value="daywise" className="h-5 w-5" />
                 <Label
                   htmlFor="view-daywise"
-                  className={(selectedView === "daywise" ? "text-primary font-medium " : "") + "cursor-pointer text-base sm:text-lg"}
+                  className={(selectedView === "daywise" ? "text-radio-active font-medium " : "") + "cursor-pointer text-base sm:text-lg"}
                 >
                   Day-wise
                 </Label>
@@ -173,7 +173,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
                 </SelectTrigger>
                 <SelectContent>
                   {billingCycles.map((cycle) => (
-                    <SelectItem key={cycle.label} value={cycle.label} className="text-base sm:text-lg">
+                    <SelectItem key={cycle.label} value={cycle.label} className="dropdown-content">
                       {cycle.label}
                     </SelectItem>
                   ))}

@@ -19,11 +19,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 217 33% 17%;
 
-    /* Primary - Professional teal */
-    --primary: 180 83% 25%;
+    /* Primary - Updated to new blue color */
+    --primary: 220 60% 40%; /* #325395 */
     --primary-foreground: 0 0% 100%;
-    --primary-muted: 180 83% 35%;
-    --primary-light: 180 83% 95%;
+    --primary-muted: 220 60% 50%;
+    --primary-light: 220 60% 95%;
 
     /* Secondary - Clean neutral */
     --secondary: 215 15% 95%;
@@ -49,18 +49,18 @@
 
     /* Accent */
     --accent: 180 83% 95%;
-    --accent-foreground: 180 83% 25%;
+    --accent-foreground: 220 60% 40%;
 
     /* Borders and inputs */
     --border: 215 20% 92%;
     --input: 215 20% 92%;
-    --ring: 180 83% 25%;
+    --ring: 220 60% 40%;
 
     /* Layout */
     --radius: 0.75rem;
     
     /* Custom gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(180 83% 25%), hsl(180 83% 35%));
+    --gradient-primary: linear-gradient(135deg, hsl(220 60% 40%), hsl(220 60% 50%));
     --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 98%));
     
@@ -197,5 +197,67 @@
   
   .transition-fast {
     transition: var(--transition-fast);
+  }
+  
+  /* Custom typography classes for the new design system */
+  .payout-heading {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .basic-subheading {
+    font-size: 12px;
+    color: #8FA3A5;
+    font-weight: 400;
+  }
+  
+  .basic-value {
+    font-size: 14px;
+    color: #313B4A;
+    font-weight: 700;
+  }
+  
+  .select-payout-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #325395;
+  }
+  
+  .dropdown-content {
+    font-size: 14.67px;
+    color: #3A4453;
+  }
+  
+  .activity-heading {
+    font-size: 16px;
+    color: #1F2D3D;
+    font-weight: 700;
+  }
+  
+  .payout-section-heading {
+    font-size: 16px;
+    color: #1F2D3D;
+    font-weight: 700;
+  }
+  
+  .payout-content {
+    font-size: 14px;
+    color: #1F2D3D;
+    font-weight: 500;
+  }
+  
+  .payout-total {
+    font-size: 14px;
+    color: #1F2D3D;
+    font-weight: 700;
+  }
+  
+  .payout-line {
+    color: #000000;
+  }
+  
+  /* Radio button active color */
+  .radio-active {
+    color: #113DBC;
   }
 }

@@ -19,7 +19,7 @@ export function ConcernSubmittedPage({ onBackToHome }: ConcernSubmittedPageProps
               className="h-12 w-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold text-primary mb-2">
+          <h1 className="payout-heading text-primary-blue mb-2">
             Concern Submitted
           </h1>
         </div>

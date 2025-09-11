@@ -54,7 +54,7 @@ export function LoginPage({ onLoginSuccess }: LoginPageProps) {
               className="h-12 w-auto"
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-primary">
+          <CardTitle className="payout-heading text-primary-blue">
             IRCTC Walker Login
           </CardTitle>
         </CardHeader>

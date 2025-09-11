@@ -91,43 +91,130 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
       {/* Activity Details */}
       <Card className="card-elevated">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Activity Details</CardTitle>
+          <CardTitle className="activity-heading">Activity Details</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-sm text-muted-foreground mb-1">Login hrs</div>
-            <div className="text-lg font-bold">{detail.loginHours}hrs</div>
+            <div className="basic-subheading mb-1">Login hrs</div>
+            <div className="basic-value">{detail.loginHours}hrs</div>
           </div>
           <div>
-            <div className="text-sm text-muted-foreground mb-1">Orders</div>
-            <div className="text-lg font-bold">{detail.orderCount} orders</div>
+            <div className="basic-subheading mb-1">Orders</div>
+            <div className="basic-value">{detail.orderCount} orders</div>
           </div>
           <div>
-            <div className="text-sm text-muted-foreground mb-1">OT hrs</div>
-            <div className="text-lg font-bold">{detail.otHours}hrs</div>
+            <div className="basic-subheading mb-1">OT hrs</div>
+            <div className="basic-value">{detail.otHours}hrs</div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Salary Section */}
+      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#E1F2FF', borderColor: '#028EF8'}}>
+        <CardHeader className="pb-2">
+          <CardTitle className="payout-section-heading">Salary</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Base Payout</span>
+            <span className="payout-content" style={{color: '#028EF8', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.basePayout.toLocaleString()}</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Rewards Section */}
+      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#E3FEEF', borderColor: '#28C269'}}>
+        <CardHeader className="pb-2">
+          <CardTitle className="payout-section-heading">Rewards</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="payout-content">OT Payout</span>
+            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.otPayout.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Walker Order Fulfilment</span>
+            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="payout-content">100% On-time login</span>
+            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.onTimeLoginReward.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Best Ranked Station Reward</span>
+            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.bestRankedStationReward.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Festive Incentives</span>
+            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.festiveIncentives.toLocaleString()}</span>
+          </div>
+          <hr className="payout-line" />
+          <div className="flex items-center justify-between payout-total">
+            <span>Total Rewards</span>
+            <span style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{totalRewards.toLocaleString()}</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Deductions Section */}
+      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#FFFAEB', borderColor: '#DC6803'}}>
+        <CardHeader className="pb-2">
+          <CardTitle className="payout-section-heading">Deductions</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Assets Deduction Amount</span>
+            <span className="payout-content" style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.assetDeduction.toLocaleString()}</span>
+          </div>
+          <hr className="payout-line" />
+          <div className="flex items-center justify-between payout-total">
+            <span>Total Deductions</span>
+            <span style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalDeductions.toLocaleString()}</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Penalties Section */}
+      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#FFEDED', borderColor: '#FE4141'}}>
+        <CardHeader className="pb-2">
+          <CardTitle className="payout-section-heading">Penalties</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Cancellation Amount</span>
+            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.cancellationAmount.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Walker late login</span>
+            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.walkerLateLogin.toLocaleString()}</span>
+          </div>
+          <hr className="payout-line" />
+          <div className="flex items-center justify-between payout-total">
+            <span>Total Penalties</span>
+            <span style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalPenalties.toLocaleString()}</span>
           </div>
         </CardContent>
       </Card>
 
       {/* TDS Section */}
       {showTdsInfo && (
-        <Card className="card-elevated border-2 border-dashed" style={{borderColor: '#3A11BC', backgroundColor: '#bcabff'}}>
-          <CardHeader>
+        <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#EFECFC', borderColor: '#937DEC'}}>
+          <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-bold text-black">TDS</CardTitle>
+              <CardTitle className="payout-section-heading">TDS</CardTitle>
               {detail.tdsApplicable && (
-                <Badge className="text-white border-white/20" style={{backgroundColor: '#3A11BC'}}>
+                <Badge className="text-white" style={{backgroundColor: '#3A11BC', fontSize: '10px'}}>
                   TDS Applicable
                 </Badge>
               )}
             </div>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="pt-0">
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-black">₹{detail.totalEarningFY.toLocaleString()}</span>
-              <span className="text-xl font-bold text-black">₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
+              <span style={{color: '#1F2D3D', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.totalEarningFY.toLocaleString()}</span>
+              <span style={{color: '#1F2D3D', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
             </div>
-            <div className="flex items-center justify-between text-sm text-black">
+            <div className="flex items-center justify-between" style={{color: '#1F2D3D', fontSize: '10px'}}>
               <span>Total Earnings in FY</span>
               <span>Total Earnings (Including this month)</span>
             </div>
@@ -135,130 +222,38 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true }: PayoutBre
         </Card>
       )}
 
-      {/* Salary Section */}
-      <Card className="card-elevated bg-blue-50">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Salary</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span>Base Payout</span>
-            <span className="font-semibold">₹{detail.basePayout.toLocaleString()}</span>
-          </div>
-          {detail.tdsApplicable && (
-            <div className="flex items-center justify-between text-destructive">
-              <span>TDS Amount (10%)</span>
-              <span className="font-semibold">₹{detail.tdsAmount.toLocaleString()}</span>
-            </div>
-          )}
-          <hr className="border-gray-200" />
-          <div className="flex items-center justify-between font-semibold">
-            <span>Total Salary</span>
-            <span>₹{salaryAfterTDS.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Rewards Section */}
-      <Card className="card-elevated bg-green-50">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Rewards</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span>OT Payout</span>
-            <span className="font-semibold">₹{detail.otPayout.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Walker Order Fulfilment</span>
-            <span className="font-semibold">₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>100% On-time login</span>
-            <span className="font-semibold">₹{detail.onTimeLoginReward.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Best Ranked Station Reward</span>
-            <span className="font-semibold">₹{detail.bestRankedStationReward.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Festive Incentives</span>
-            <span className="font-semibold">₹{detail.festiveIncentives.toLocaleString()}</span>
-          </div>
-          <hr className="border-gray-200" />
-          <div className="flex items-center justify-between font-semibold">
-            <span>Total Rewards</span>
-            <span>₹{totalRewards.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Deductions Section */}
-      <Card className="card-elevated bg-orange-50">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Deductions</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span>Assets Deduction Amount</span>
-            <span className="font-semibold text-destructive">₹{detail.assetDeduction.toLocaleString()}</span>
-          </div>
-          <hr className="border-gray-200" />
-          <div className="flex items-center justify-between font-semibold">
-            <span>Total Deductions</span>
-            <span className="text-destructive">₹{totalDeductions.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Penalties Section */}
-      <Card className="card-elevated bg-red-50">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Penalties</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span>Cancellation Amount</span>
-            <span className="font-semibold text-destructive">₹{detail.cancellationAmount.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span>Walker late login</span>
-            <span className="font-semibold text-destructive">₹{detail.walkerLateLogin.toLocaleString()}</span>
-          </div>
-          <hr className="border-gray-200" />
-          <div className="flex items-center justify-between font-semibold">
-            <span>Total Penalties</span>
-            <span className="text-destructive">₹{totalPenalties.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Payout Summary */}
+      {/* Final Payout Summary */}
       <Card className="card-elevated bg-gray-50">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold">Payout</CardTitle>
+          <CardTitle className="payout-section-heading">Payout</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between">
-            <span>Total Salary</span>
-            <span className="font-semibold">₹{salaryAfterTDS.toLocaleString()}</span>
+            <span className="payout-content">Base Payout</span>
+            <span className="payout-content" style={{color: '#028EF8', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.basePayout.toLocaleString()}</span>
+          </div>
+          {detail.tdsApplicable && (
+            <div className="flex items-center justify-between">
+              <span className="payout-content">TDS Amount (10%)</span>
+              <span className="payout-content" style={{color: '#937DEC', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.tdsAmount.toLocaleString()}</span>
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <span className="payout-content">Total Rewards</span>
+            <span className="payout-content" style={{color: '#28C269', fontSize: '14px', fontWeight: 'bold'}}>₹{totalRewards.toLocaleString()}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span>Total Rewards</span>
-            <span className="font-semibold">₹{totalRewards.toLocaleString()}</span>
+            <span className="payout-content">Total Deductions</span>
+            <span className="payout-content" style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalDeductions.toLocaleString()}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span>Total Deductions</span>
-            <span className="font-semibold text-destructive">₹{totalDeductions.toLocaleString()}</span>
+            <span className="payout-content">Total Penalties</span>
+            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalPenalties.toLocaleString()}</span>
           </div>
-          <div className="flex items-center justify-between">
-            <span>Total Penalties</span>
-            <span className="font-semibold text-destructive">₹{totalPenalties.toLocaleString()}</span>
-          </div>
-          <hr className="border-gray-300" />
-          <div className="flex items-center justify-between text-lg font-bold">
+          <hr className="payout-line" />
+          <div className="flex items-center justify-between payout-total">
             <span>Total Payout</span>
-            <span>₹{totalPayout.toLocaleString()}</span>
+            <span style={{fontSize: '14px', fontWeight: 'bold'}}>₹{totalPayout.toLocaleString()}</span>
           </div>
         </CardContent>
       </Card>
