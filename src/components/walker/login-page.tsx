@@ -57,6 +57,16 @@ export function LoginPage({ onLoginSuccess }: LoginPageProps) {
           <CardTitle className="payout-heading text-primary-blue">
             IRCTC Walker Login
           </CardTitle>
+          <div className="mt-4">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => window.open('/sheets-demo', '_blank')}
+              className="text-xs"
+            >
+              🧪 Testing Pages
+            </Button>
+          </div>
         </CardHeader>
         
         <CardContent className="space-y-6">

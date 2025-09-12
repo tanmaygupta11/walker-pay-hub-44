@@ -15,7 +15,7 @@ const MobileLookup: React.FC<MobileLookupProps> = ({
   className = ""
 }) => {
   const [mobileNumber, setMobileNumber] = useState('');
-  const { searchByMobile, loading, error, data } = useSheets();
+  const { searchByMobile, loading, error, userData } = useSheets();
 
   const handleSearch = async () => {
     if (!mobileNumber.trim()) return;
@@ -62,11 +62,11 @@ const MobileLookup: React.FC<MobileLookupProps> = ({
         </div>
       )}
 
-      {data && (
+      {userData && (
         <div className="p-4 bg-green-50 border border-green-200 rounded-md">
           <h3 className="font-semibold text-green-800 mb-2">User Found!</h3>
           <div className="space-y-1 text-sm text-green-700">
-            {Object.entries(data).map(([key, value]) => {
+            {Object.entries(userData).map(([key, value]) => {
               if (key === '_originalHeaders') return null;
               return (
                 <div key={key} className="flex justify-between">
