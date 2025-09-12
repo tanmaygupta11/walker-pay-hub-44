@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PayoutDetail } from "@/types/walker";
 import { calculateTotalPayout } from "@/data/mockData";
 import { useState } from "react";
@@ -16,7 +17,9 @@ import {
   AlertCircle,
   Calculator,
   TrendingDown,
-  Info
+  Info,
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
 
 interface PayoutBreakdownProps {
@@ -120,6 +123,12 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  
+  // Collapsible state for each section
+  const [rewardsOpen, setRewardsOpen] = useState(false);
+  const [deductionsOpen, setDeductionsOpen] = useState(false);
+  const [penaltiesOpen, setPenaltiesOpen] = useState(false);
+  const [tdsOpen, setTdsOpen] = useState(false);
   
   const openModal = (title: string, content: React.ReactNode) => {
     setModalTitle(title);
@@ -264,7 +273,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
       {/* Activity Details */}
       <Card className="card-elevated">
         <CardHeader>
-          <CardTitle className="activity-heading">Activity Details</CardTitle>
+          <CardTitle className="text-2xl font-bold">Activity Details</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-3 gap-4 text-center">
           <div>
@@ -282,251 +291,300 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
         </CardContent>
       </Card>
 
-      {/* Salary Section */}
-      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#E1F2FF', borderColor: '#028EF8'}}>
-        <CardHeader className="pb-2">
-          <CardTitle className="payout-section-heading">Salary</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="payout-content">Base Payout</span>
-            <span className="payout-content" style={{color: '#028EF8', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.basePayout.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Rewards Section */}
-      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#E3FEEF', borderColor: '#28C269'}}>
-        <CardHeader className="pb-2">
-          <CardTitle className="payout-section-heading">Rewards</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">OT Payout</span>
-              <button
-                onClick={() => openModal('OT Payout', getOTPayoutContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.otPayout.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Walker Order Fulfilment</span>
-              <button
-                onClick={() => openModal('Walker Order Fulfilment', getWalkerOrderFulfilmentContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">100% On-time login</span>
-              <button
-                onClick={() => openModal('100% On-time login', getOnTimeLoginContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#000000', fontSize: '14px', fontWeight: 'bold'}}>NA</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Best Ranked Station Reward</span>
-              <button
-                onClick={() => openModal('Best Ranked Station Reward', getBestRankedStationContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#000000', fontSize: '14px', fontWeight: 'bold'}}>NA</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Festive Incentives</span>
-              <button
-                onClick={() => openModal('Festive Incentives', getFestiveIncentivesContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.festiveIncentives.toLocaleString()}</span>
-          </div>
-          <hr className="payout-line" />
-          <div className="flex items-center justify-between payout-total">
-            <span>Total Rewards</span>
-            <span style={{color: '#1F9A53', fontSize: '14px', fontWeight: 'bold'}}>₹8050</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Deductions Section */}
-      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#FFFAEB', borderColor: '#DC6803'}}>
-        <CardHeader className="pb-2">
-          <CardTitle className="payout-section-heading">Deductions</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Assets Deduction Amount</span>
-              <button
-                onClick={() => openModal('Assets Deduction Amount', <div className="space-y-3">
-                  <p className="text-sm text-gray-600">
-                  Criteria - If more than 1 t-shirts have been used in the orders, then 100% of the assets deduction will be applied
-                  </p>
-                  <p className="text-sm text-gray-600">
-                  Calculation = No. of t-shirts used x Price of t-shirt
-                  </p>
-                  <p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.assetDeduction.toLocaleString()}</span>
-          </div>
-          <hr className="payout-line" />
-          <div className="flex items-center justify-between payout-total">
-            <span>Total Deductions</span>
-            <span style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalDeductions.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Penalties Section */}
-      <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#FFEDED', borderColor: '#FE4141'}}>
-        <CardHeader className="pb-2">
-          <CardTitle className="payout-section-heading">Penalties</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Cancellation Amount</span>
-              <button
-                onClick={() => openModal('Cancellation Amount', getCancellationAmountContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.cancellationAmount.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-            <span className="payout-content">Walker late login</span>
-              <button
-                onClick={() => openModal('Walker late login', getWalkerLateLoginContent())}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <Info className="h-4 w-4" />
-              </button>
-            </div>
-            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.walkerLateLogin.toLocaleString()}</span>
-          </div>
-          <hr className="payout-line" />
-          <div className="flex items-center justify-between payout-total">
-            <span>Total Penalties</span>
-            <span style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalPenalties.toLocaleString()}</span>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* TDS Section */}
-      {showTdsInfo && (
-        <Card className="card-elevated border-2 border-dashed" style={{backgroundColor: '#EFECFC', borderColor: '#937DEC'}}>
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-              <CardTitle className="payout-section-heading">TDS</CardTitle>
-                <button
-                  onClick={() => openModal('TDS', <div className="space-y-3">
-                    <p className="text-sm text-gray-600">
-                      PAN Status - Linked<br/>
-                      Aadhar Status - Linked<br/>
-                      <br/>
-                      Criteria - <br/>
-                      If the total earnings in Full Year is more than ₹1,00,000<br/>
-                      OR<br/>
-                      If the total earnings in this month is more than ₹30,000<br/>
-                      then 10% TDS will be applied
-                      </p>
-                    <p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <Info className="h-4 w-4" />
-                </button>
-              </div>
-              {detail.tdsApplicable && (
-                <Badge className="text-white" style={{backgroundColor: '#3A11BC', fontSize: '10px'}}>
-                  TDS Applicable
-                </Badge>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="flex items-center justify-between">
-              <span style={{color: '#1F2D3D', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.totalEarningFY.toLocaleString()}</span>
-              <span style={{color: '#1F2D3D', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
-            </div>
-            <div className="flex items-center justify-between" style={{color: '#1F2D3D', fontSize: '10px'}}>
-              <span>Total Earnings in FY</span>
-              <span>Total Earnings (Including this month)</span>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Final Payout Summary */}
-      <Card className="card-elevated bg-gray-50">
+      {/* Main Payout Card */}
+      <Card className="card-elevated">
         <CardHeader>
-          <CardTitle className="payout-section-heading">Payout</CardTitle>
+          <CardTitle className="text-xl font-semibold">Payout Breakdown</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="payout-content">Base Payout</span>
-            <span className="payout-content" style={{color: '#028EF8', fontSize: '14px', fontWeight: 'bold'}}>₹{detail.basePayout.toLocaleString()}</span>
-          </div>
-          {detail.tdsApplicable && (
-            <div className="flex items-center justify-between">
-              <span className="payout-content">TDS Amount (10%)</span>
-              <span className="payout-content" style={{color: '#937DEC', fontSize: '14px', fontWeight: 'bold'}}>-₹{detail.tdsAmount.toLocaleString()}</span>
+          
+          {/* Base Payout */}
+          <div className="flex items-center justify-between p-3 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="flex items-center gap-3">
+              <Calculator className="h-5 w-5 text-blue-600" />
+              <span className="font-medium">Base Payout</span>
             </div>
+            <span className="font-bold text-blue-600">₹{detail.basePayout.toLocaleString()}</span>
+          </div>
+
+          {/* Rewards Collapsible */}
+          <Collapsible open={rewardsOpen} onOpenChange={setRewardsOpen}>
+            <CollapsibleTrigger asChild>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 cursor-pointer transition-colors">
+                <div className="flex items-center gap-3">
+                  <Award className="h-5 w-5 text-green-600" />
+                  <span className="font-medium">Total Rewards</span>
+                  {rewardsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                </div>
+                <span className="font-bold text-green-600">+₹{totalRewards.toLocaleString()}</span>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-medium">Rewards Details</span>
+                  <button
+                    onClick={() => openModal('Rewards Information', 
+                      <div className="space-y-3">
+                        <h4 className="font-semibold">Rewards Section</h4>
+                        <p className="text-sm text-gray-600">This section includes all performance-based rewards and incentives.</p>
+                        <p className="text-sm text-gray-600">Click on individual items below to see specific eligibility criteria.</p>
+                      </div>
+                    )}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <Info className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-green-200">
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <Timer className="h-4 w-4 text-orange-500" />
+                    <span className="text-sm">OT Payout</span>
+                    <button
+                      onClick={() => openModal('OT Payout', getOTPayoutContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-green-600">₹{detail.otPayout.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <Package className="h-4 w-4 text-blue-500" />
+                    <span className="text-sm">Walker Order Fulfilment</span>
+                    <button
+                      onClick={() => openModal('Walker Order Fulfilment', getWalkerOrderFulfilmentContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-green-600">₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-purple-500" />
+                    <span className="text-sm">100% On-time login</span>
+                    <button
+                      onClick={() => openModal('100% On-time login', getOnTimeLoginContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-500">NA</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <Target className="h-4 w-4 text-red-500" />
+                    <span className="text-sm">Best Ranked Station Reward</span>
+                    <button
+                      onClick={() => openModal('Best Ranked Station Reward', getBestRankedStationContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-500">NA</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <Gift className="h-4 w-4 text-pink-500" />
+                    <span className="text-sm">Festive Incentives</span>
+                    <button
+                      onClick={() => openModal('Festive Incentives', getFestiveIncentivesContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-green-600">₹{detail.festiveIncentives.toLocaleString()}</span>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Deductions Collapsible */}
+          <Collapsible open={deductionsOpen} onOpenChange={setDeductionsOpen}>
+            <CollapsibleTrigger asChild>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 border border-orange-200 hover:bg-orange-100 cursor-pointer transition-colors">
+                <div className="flex items-center gap-3">
+                  <TrendingDown className="h-5 w-5 text-orange-600" />
+                  <span className="font-medium">Total Deductions</span>
+                  {deductionsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                </div>
+                <span className="font-bold text-orange-600">-₹{totalDeductions.toLocaleString()}</span>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-medium">Deductions Details</span>
+                  <button
+                    onClick={() => openModal('Deductions Information', 
+                      <div className="space-y-3">
+                        <h4 className="font-semibold">Deductions Section</h4>
+                        <p className="text-sm text-gray-600">This section includes all asset-related deductions from your payout.</p>
+                      </div>
+                    )}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <Info className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-orange-200">
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-orange-500" />
+                    <span className="text-sm">Assets Deduction Amount</span>
+                    <button
+                      onClick={() => openModal('Assets Deduction Amount', <div className="space-y-3">
+                        <p className="text-sm text-gray-600">
+                        Criteria - If more than 1 t-shirts have been used in the orders, then 100% of the assets deduction will be applied
+                        </p>
+                        <p className="text-sm text-gray-600">
+                        Calculation = No. of t-shirts used x Price of t-shirt
+                        </p>
+                        <p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-orange-600">-₹{detail.assetDeduction.toLocaleString()}</span>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Penalties Collapsible */}
+          <Collapsible open={penaltiesOpen} onOpenChange={setPenaltiesOpen}>
+            <CollapsibleTrigger asChild>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 cursor-pointer transition-colors">
+                <div className="flex items-center gap-3">
+                  <XCircle className="h-5 w-5 text-red-600" />
+                  <span className="font-medium">Total Penalties</span>
+                  {penaltiesOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                </div>
+                <span className="font-bold text-red-600">-₹{totalPenalties.toLocaleString()}</span>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-medium">Penalties Details</span>
+                  <button
+                    onClick={() => openModal('Penalties Information', 
+                      <div className="space-y-3">
+                        <h4 className="font-semibold">Penalties Section</h4>
+                        <p className="text-sm text-gray-600">This section includes penalties applied for policy violations.</p>
+                      </div>
+                    )}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <Info className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-red-200">
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <XCircle className="h-4 w-4 text-red-500" />
+                    <span className="text-sm">Cancellation Amount</span>
+                    <button
+                      onClick={() => openModal('Cancellation Amount', getCancellationAmountContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-red-600">-₹{detail.cancellationAmount.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <span className="text-sm">Walker late login</span>
+                    <button
+                      onClick={() => openModal('Walker late login', getWalkerLateLoginContent())}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-3 w-3" />
+                    </button>
+                  </div>
+                  <span className="text-sm font-semibold text-red-600">-₹{detail.walkerLateLogin.toLocaleString()}</span>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* TDS Collapsible */}
+          {showTdsInfo && (
+            <Collapsible open={tdsOpen} onOpenChange={setTdsOpen}>
+              <CollapsibleTrigger asChild>
+                <div className="flex items-center justify-between p-3 rounded-lg border border-purple-200 hover:bg-purple-50 cursor-pointer transition-colors" style={{backgroundColor: '#bcabff'}}>
+                  <div className="flex items-center gap-3">
+                    <Calculator className="h-5 w-5 text-purple-600" />
+                    <span className="font-medium">TDS</span>
+                    {tdsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                    {detail.tdsApplicable && (
+                      <Badge className="text-white ml-2" style={{backgroundColor: '#3A11BC', fontSize: '10px'}}>
+                        TDS Applicable
+                      </Badge>
+                    )}
+                  </div>
+                  <span className="font-bold text-purple-600">-₹{detail.tdsAmount.toLocaleString()}</span>
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-medium">TDS Details</span>
+                    <button
+                      onClick={() => openModal('TDS', <div className="space-y-3"><p className="text-sm text-gray-600">Aadhar Status : Verified</p><p className="text-sm text-gray-600">PAN Status : Verified</p><p className="text-sm text-gray-600">Criteria :</p><p className="text-sm text-gray-600">TDS is applied if</p><p className="text-sm text-gray-600">     FY Salary &gt; 1,00,000</p><p className="text-sm text-gray-600">          OR</p><p className="text-sm text-gray-600">     Salary(in month) &gt; 30,000</p><p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <Info className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                <div className="space-y-2 pl-4 border-l-2 border-purple-200">
+                  <div className="flex items-center justify-between p-2 bg-white rounded border">
+                    <span className="text-sm">Total Earnings in FY</span>
+                    <span className="text-sm font-semibold">₹{detail.totalEarningFY.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-white rounded border">
+                    <span className="text-sm">Total Earnings (Including this month)</span>
+                    <span className="text-sm font-semibold">₹{detail.totalEarningIncludingThisMonth.toLocaleString()}</span>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           )}
-          <div className="flex items-center justify-between">
-            <span className="payout-content">Total Rewards</span>
-            <span className="payout-content" style={{color: '#28C269', fontSize: '14px', fontWeight: 'bold'}}>₹8050</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="payout-content">Total Deductions</span>
-            <span className="payout-content" style={{color: '#DC6803', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalDeductions.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="payout-content">Total Penalties</span>
-            <span className="payout-content" style={{color: '#FE4141', fontSize: '14px', fontWeight: 'bold'}}>-₹{totalPenalties.toLocaleString()}</span>
-          </div>
-          <hr className="payout-line" />
-          <div className="flex items-center justify-between payout-total">
-            <span>Total Payout</span>
-            <span style={{fontSize: '14px', fontWeight: 'bold'}}>₹23960</span>
+
+          {/* Total Payout */}
+          <div className="mt-6 pt-4 border-t-2 border-gray-200">
+            <div className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-blue-50 to-green-50 border-2 border-primary shadow-md">
+              <div className="flex items-center gap-3">
+                <Calculator className="h-6 w-6 text-primary" />
+                <span className="text-xl font-bold text-primary">Total Payout</span>
+              </div>
+              <span className="text-2xl font-bold text-primary">₹{totalPayout.toLocaleString()}</span>
+            </div>
           </div>
         </CardContent>
       </Card>
-      
-      <InfoModal 
-        isOpen={modalOpen} 
-        onClose={closeModal} 
+
+      {/* Modal */}
+      <InfoModal
+        isOpen={modalOpen}
+        onClose={closeModal}
         title={modalTitle}
         content={modalContent}
-        showDayWiseMessage={isBillingCycle}
+        showDayWiseMessage={!isBillingCycle}
       />
     </div>
   );
