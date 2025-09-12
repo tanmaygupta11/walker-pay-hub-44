@@ -303,7 +303,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
         <CardContent className="pt-0 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">OT Payout</span>
+            <span className="payout-content">OT Payout</span>
               <button
                 onClick={() => openModal('OT Payout', getOTPayoutContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -315,7 +315,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Walker Order Fulfilment</span>
+            <span className="payout-content">Walker Order Fulfilment</span>
               <button
                 onClick={() => openModal('Walker Order Fulfilment', getWalkerOrderFulfilmentContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -327,7 +327,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">100% On-time login</span>
+            <span className="payout-content">100% On-time login</span>
               <button
                 onClick={() => openModal('100% On-time login', getOnTimeLoginContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -339,7 +339,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Best Ranked Station Reward</span>
+            <span className="payout-content">Best Ranked Station Reward</span>
               <button
                 onClick={() => openModal('Best Ranked Station Reward', getBestRankedStationContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -351,7 +351,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Festive Incentives</span>
+            <span className="payout-content">Festive Incentives</span>
               <button
                 onClick={() => openModal('Festive Incentives', getFestiveIncentivesContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -377,7 +377,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
         <CardContent className="pt-0 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Assets Deduction Amount</span>
+            <span className="payout-content">Assets Deduction Amount</span>
               <button
                 onClick={() => openModal('Assets Deduction Amount', <div className="space-y-3">
                   <p className="text-sm text-gray-600">
@@ -410,7 +410,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
         <CardContent className="pt-0 space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Cancellation Amount</span>
+            <span className="payout-content">Cancellation Amount</span>
               <button
                 onClick={() => openModal('Cancellation Amount', getCancellationAmountContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -422,7 +422,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="payout-content">Walker late login</span>
+            <span className="payout-content">Walker late login</span>
               <button
                 onClick={() => openModal('Walker late login', getWalkerLateLoginContent())}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -446,7 +446,7 @@ export function PayoutBreakdown({ detail, title, showTdsInfo = true, isBillingCy
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CardTitle className="payout-section-heading">TDS</CardTitle>
+              <CardTitle className="payout-section-heading">TDS</CardTitle>
                 <button
                   onClick={() => openModal('TDS', <div className="space-y-3">
                     <p className="text-sm text-gray-600">

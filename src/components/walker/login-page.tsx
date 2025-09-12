@@ -126,6 +126,7 @@ export function LoginPage({ onLoginSuccess }: LoginPageProps) {
           )}
         </CardContent>
       </Card>
+
     </div>
   );
 }

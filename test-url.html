@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Apps Script URL Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .loading { background-color: #fff3cd; border-color: #ffeaa7; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Google Apps Script URL Test</h1>
+    
+    <div class="test-section">
+        <h3>Test URL Accessibility</h3>
+        <button onclick="testUrl()">Test URL</button>
+        <div id="urlResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Connection</h3>
+        <button onclick="testConnection()">Test Connection</button>
+        <div id="connectionResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Health Check</h3>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="healthResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test API Info</h3>
+        <button onclick="testInfo()">Test Info</button>
+        <div id="infoResult"></div>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbz_mRG9_pPE6_OPXBrzMOa0TcImS-EgJwHOA12L9zImuLEXQU-_On7AkT9TQRHGh4Y/exec';
+        
+        function showResult(elementId, content, isSuccess = false) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            element.className = isSuccess ? 'success' : 'error';
+        }
+        
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '<p>Testing...</p>';
+            element.className = 'loading';
+        }
+        
+        async function testUrl() {
+            showLoading('urlResult');
+            try {
+                console.log('Testing URL:', API_URL);
+                const response = await fetch(API_URL, { mode: 'cors' });
+                console.log('Response status:', response.status);
+                console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+                
+                if (response.ok) {
+                    const text = await response.text();
+                    showResult('urlResult', `
+                        <h4>✅ URL is accessible!</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <p><strong>Response:</strong></p>
+                        <pre>${text}</pre>
+                    `, true);
+                } else {
+                    showResult('urlResult', `
+                        <h4>❌ URL returned error</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <p><strong>Status Text:</strong> ${response.statusText}</p>
+                    `);
+                }
+            } catch (error) {
+                console.error('URL test error:', error);
+                showResult('urlResult', `
+                    <h4>❌ URL test failed</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Type:</strong> ${error.name}</p>
+                `);
+            }
+        }
+        
+        async function testConnection() {
+            showLoading('connectionResult');
+            try {
+                const response = await fetch(`${API_URL}?action=test`, { mode: 'cors' });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showResult('connectionResult', `
+                        <h4>✅ Connection test successful!</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `, true);
+                } else {
+                    showResult('connectionResult', `
+                        <h4>❌ Connection test failed</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `);
+                }
+            } catch (error) {
+                showResult('connectionResult', `
+                    <h4>❌ Connection test error</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `);
+            }
+        }
+        
+        async function testHealth() {
+            showLoading('healthResult');
+            try {
+                const response = await fetch(`${API_URL}?action=health`, { mode: 'cors' });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showResult('healthResult', `
+                        <h4>✅ Health check successful!</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `, true);
+                } else {
+                    showResult('healthResult', `
+                        <h4>❌ Health check failed</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `);
+                }
+            } catch (error) {
+                showResult('healthResult', `
+                    <h4>❌ Health check error</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `);
+            }
+        }
+        
+        async function testInfo() {
+            showLoading('infoResult');
+            try {
+                const response = await fetch(`${API_URL}?action=info`, { mode: 'cors' });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showResult('infoResult', `
+                        <h4>✅ API info retrieved!</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `, true);
+                } else {
+                    showResult('infoResult', `
+                        <h4>❌ API info failed</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `);
+                }
+            } catch (error) {
+                showResult('infoResult', `
+                    <h4>❌ API info error</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `);
+            }
+        }
+        
+        // Auto-run URL test on page load
+        window.onload = function() {
+            testUrl();
+        };
+    </script>
+</body>
+</html>
+

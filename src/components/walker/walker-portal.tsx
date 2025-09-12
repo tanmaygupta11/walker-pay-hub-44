@@ -29,7 +29,9 @@ export function WalkerPortal() {
   return (
     <>
       {currentStep === 'login' && (
-        <LoginPage onLoginSuccess={handleLoginSuccess} />
+        <LoginPage 
+          onLoginSuccess={handleLoginSuccess} 
+        />
       )}
 
       {currentStep === 'basic-details' && walkerData && null}
@@ -75,6 +77,7 @@ export function WalkerPortal() {
       {currentStep === 'concern-submitted' && (
         <ConcernSubmittedPage onBackToHome={handleBackToHome} />
       )}
+
     </>
   );
 }
