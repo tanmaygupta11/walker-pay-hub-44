@@ -19,6 +19,7 @@ interface PayoutDetailsPageProps {
   onBack: () => void;
   onViewDaywise: () => void;
   onProceed: () => void;
+  onNotSatisfied: () => void;
   // kept optional for compatibility with previous version
   selectedBillingCycle?: string;
   setSelectedBillingCycle?: (value: string) => void;
@@ -31,7 +32,7 @@ interface PayoutDetailsPageProps {
   } | null;
 }
 
-export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBillingCycle: selectedBillingCycleProp, setSelectedBillingCycle: setSelectedBillingCycleProp, walkerData }: PayoutDetailsPageProps) {
+export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, onNotSatisfied, selectedBillingCycle: selectedBillingCycleProp, setSelectedBillingCycle: setSelectedBillingCycleProp, walkerData }: PayoutDetailsPageProps) {
   const [selectedBillingCycleState, setSelectedBillingCycleState] = useState("");
   const [selectedView, setSelectedView] = useState<"billing" | "daywise">("billing");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -40,12 +41,11 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
 
   const billingCycles = generateBillingCyclesForYear(new Date().getFullYear());
 
-  // Preselect previous billing cycle based on current month and show details immediately
+  // Preselect latest available billing cycle (August) and show details immediately
   useEffect(() => {
     if (!selectedBillingCycle) {
-      const now = new Date();
-      const prevMonthIndex = (now.getMonth() + 11) % 12; // previous calendar month
-      const defaultCycle = billingCycles.find((c) => c.monthIndex === prevMonthIndex) ?? billingCycles[0];
+      // Default to the first cycle (August, which is the latest available)
+      const defaultCycle = billingCycles[0];
       if (defaultCycle) {
         setSelectedBillingCycle(defaultCycle.label);
       }
@@ -227,14 +227,21 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, selectedBi
             </>
           )}
 
-          {/* Persistent Actions */}
-          <div className="flex gap-4 justify-center">
-            <Button variant="outline" onClick={onBack} className="flex items-center gap-2 rounded-md px-4 py-2 hover:bg-accent/60 transition-smooth">
-              Home
+          {/* Action buttons aligned */}
+          <div className="flex items-center justify-center gap-6 mt-6">
+            <Button 
+              onClick={onBack}
+              variant="outline"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
+            >
+              Logout
             </Button>
-            <Button onClick={onProceed}>
-              Continue
-            </Button>
+            <button 
+              onClick={onNotSatisfied}
+              className="text-xs text-red-600 hover:text-red-700 transition-colors duration-200 underline"
+            >
+              Not Satisfied with the Payout / Have Concerns
+            </button>
           </div>
         </div>
       </div>

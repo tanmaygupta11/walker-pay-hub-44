@@ -114,9 +114,6 @@ export function DaywiseDetailsPage({ onBack, onBackWithState, onProceed }: Daywi
                   <ChevronLeft className="w-4 h-4" />
                   Back
                 </Button>
-                <Button onClick={onProceed}>
-                  Continue
-                </Button>
               </div>
             </>
           )}

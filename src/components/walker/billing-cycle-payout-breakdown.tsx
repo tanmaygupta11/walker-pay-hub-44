@@ -54,14 +54,6 @@ function InfoModal({ isOpen, onClose, title, content }: InfoModalProps) {
         <div className="mb-6">
           {content}
         </div>
-        <div className="flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Close
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -261,16 +253,22 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                 <span className="font-bold text-green-600">+₹{totalRewards.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Rewards Details</span>
                   <button
                     onClick={() => openModal('Rewards Information', 
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         <h4 className="font-semibold">Rewards Section</h4>
                         <p className="text-sm text-gray-600">This section includes all performance-based rewards and incentives.</p>
-                        <p className="text-sm text-gray-600">Click on individual items below to see specific eligibility criteria.</p>
+                        <div className="space-y-3">
+                          {getOTPayoutContent()}
+                          {getWalkerOrderFulfilmentContent()}
+                          {getOnTimeLoginContent()}
+                          {getBestRankedStationContent()}
+                          {getFestiveIncentivesContent()}
+                        </div>
                       </div>
                     )}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -284,12 +282,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <Timer className="h-4 w-4 text-orange-500" />
                     <span className="text-sm">OT Payout</span>
-                    <button
-                      onClick={() => openModal('OT Payout', getOTPayoutContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-green-600">₹{detail.otPayout.toLocaleString()}</span>
                 </div>
@@ -297,12 +289,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <Package className="h-4 w-4 text-blue-500" />
                     <span className="text-sm">Walker Order Fulfilment</span>
-                    <button
-                      onClick={() => openModal('Walker Order Fulfilment', getWalkerOrderFulfilmentContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-green-600">₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
                 </div>
@@ -310,12 +296,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-purple-500" />
                     <span className="text-sm">100% On-time login</span>
-                    <button
-                      onClick={() => openModal('100% On-time login', getOnTimeLoginContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-gray-500">NA</span>
                 </div>
@@ -323,12 +303,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <Target className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Best Ranked Station Reward</span>
-                    <button
-                      onClick={() => openModal('Best Ranked Station Reward', getBestRankedStationContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-gray-500">NA</span>
                 </div>
@@ -336,12 +310,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <Gift className="h-4 w-4 text-pink-500" />
                     <span className="text-sm">Festive Incentives</span>
-                    <button
-                      onClick={() => openModal('Festive Incentives', getFestiveIncentivesContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-green-600">₹{detail.festiveIncentives.toLocaleString()}</span>
                 </div>
@@ -361,15 +329,22 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                 <span className="font-bold text-orange-600">-₹{totalDeductions.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Deductions Details</span>
                   <button
                     onClick={() => openModal('Deductions Information', 
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         <h4 className="font-semibold">Deductions Section</h4>
                         <p className="text-sm text-gray-600">This section includes all asset-related deductions from your payout.</p>
+                        <div className="space-y-3">
+                          <div className="space-y-3">
+                            <h5 className="font-medium">Assets Deduction Amount</h5>
+                            {/** reuse existing content */}
+                            {(<div className="space-y-3"><p className="text-sm text-gray-600">Criteria : It is charged when the no. of t-shirts used is greater than 1</p><p className="text-sm text-gray-600">Calculation = (No. of tshirts used-1) x Rs.200</p><p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
+                          </div>
+                        </div>
                       </div>
                     )}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -383,12 +358,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4 text-orange-500" />
                     <span className="text-sm">Assets Deduction Amount</span>
-                    <button
-                      onClick={() => openModal('Assets Deduction Amount', <div className="space-y-3"><p className="text-sm text-gray-600">Criteria : It is charged when the no. of t-shirts used is greater than 1</p><p className="text-sm text-gray-600">Calculation = (No. of tshirts used-1) x Rs.200</p><p className="text-sm text-gray-600">Your FE ID - FE001234</p></div>)}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-orange-600">-₹{detail.assetDeduction.toLocaleString()}</span>
                 </div>
@@ -408,15 +377,19 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                 <span className="font-bold text-red-600">-₹{totalPenalties.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Penalties Details</span>
                   <button
                     onClick={() => openModal('Penalties Information', 
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         <h4 className="font-semibold">Penalties Section</h4>
                         <p className="text-sm text-gray-600">This section includes penalties applied for policy violations.</p>
+                        <div className="space-y-3">
+                          {getCancellationAmountContent()}
+                          {getWalkerLateLoginContent()}
+                        </div>
                       </div>
                     )}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -430,12 +403,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <XCircle className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Cancellation Amount</span>
-                    <button
-                      onClick={() => openModal('Cancellation Amount', getCancellationAmountContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-red-600">-₹{detail.cancellationAmount.toLocaleString()}</span>
                 </div>
@@ -443,12 +410,6 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <div className="flex items-center gap-2">
                     <AlertCircle className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Walker late login</span>
-                    <button
-                      onClick={() => openModal('Walker late login', getWalkerLateLoginContent())}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Info className="h-3 w-3" />
-                    </button>
                   </div>
                   <span className="text-sm font-semibold text-red-600">-₹{detail.walkerLateLogin.toLocaleString()}</span>
                 </div>
@@ -474,7 +435,7 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                   <span className="font-bold text-purple-600">-₹{detail.tdsAmount.toLocaleString()}</span>
                 </div>
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 ml-8 space-y-2 animate-accordion-down">
+              <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-lg font-medium">TDS Details</span>

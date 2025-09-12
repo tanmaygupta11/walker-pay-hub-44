@@ -37,7 +37,11 @@ const MONTH_ABBR = [
 
 export function generateBillingCyclesForYear(year: number): GeneratedBillingCycle[] {
 	const cycles: GeneratedBillingCycle[] = [];
-	for (let m = 0; m < 12; m += 1) {
+	
+	// Generate cycles for months August through April (descending order)
+	const targetMonths = [7, 6, 5, 4, 3]; // August(7), July(6), June(5), May(4), April(3)
+	
+	for (const m of targetMonths) {
 		const currentYear = year;
 		const currentMonthName = MONTH_NAMES[m];
 		const currentMonthAbbr = MONTH_ABBR[m];

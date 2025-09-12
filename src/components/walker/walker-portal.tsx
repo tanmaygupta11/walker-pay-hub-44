@@ -3,13 +3,12 @@ import { LoginPage } from "./login-page";
 import { BasicDetailsPage } from "./basic-details-page";
 import { PayoutDetailsPage } from "./payout-details-page";
 import { DaywiseDetailsPage } from "./daywise-details-page";
-import { VerificationDialog } from "./verification-dialog";
 import { WalkerConcernPage } from "./walker-concern-page";
 import { ConfirmationPage } from "./confirmation-page";
 import { ConcernSubmittedPage } from "./concern-submitted-page";
 import { WalkerDetails } from "@/types/walker";
 
-type Step = 'login' | 'basic-details' | 'payout-details' | 'daywise-details' | 'verification' | 'walker-concern' | 'confirmation' | 'concern-submitted';
+type Step = 'login' | 'basic-details' | 'payout-details' | 'daywise-details' | 'walker-concern' | 'confirmation' | 'concern-submitted';
 
 export function WalkerPortal() {
   const [currentStep, setCurrentStep] = useState<Step>('login');
@@ -40,7 +39,8 @@ export function WalkerPortal() {
         <PayoutDetailsPage
           onBack={() => setCurrentStep('login')}
           onViewDaywise={() => setCurrentStep('daywise-details')}
-          onProceed={() => setCurrentStep('verification')}
+          onProceed={() => setCurrentStep('confirmation')}
+          onNotSatisfied={() => setCurrentStep('walker-concern')}
           selectedBillingCycle={selectedBillingCycle}
           setSelectedBillingCycle={setSelectedBillingCycle}
           walkerData={walkerData}
@@ -51,21 +51,14 @@ export function WalkerPortal() {
         <DaywiseDetailsPage
           onBack={() => setCurrentStep('payout-details')}
           onBackWithState={() => setCurrentStep('payout-details')}
-          onProceed={() => setCurrentStep('verification')}
+          onProceed={() => setCurrentStep('confirmation')}
         />
       )}
 
-      {currentStep === 'verification' && (
-        <VerificationDialog
-          onBack={() => setCurrentStep('payout-details')}
-          onYes={() => setCurrentStep('confirmation')}
-          onConcernSubmitted={() => setCurrentStep('concern-submitted')}
-        />
-      )}
 
       {currentStep === 'walker-concern' && (
         <WalkerConcernPage
-          onBack={() => setCurrentStep('verification')}
+          onBack={() => setCurrentStep('payout-details')}
           onSubmit={() => setCurrentStep('concern-submitted')}
         />
       )}

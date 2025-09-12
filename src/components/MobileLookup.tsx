@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSheets } from '../hooks/useSheets';
 
 interface MobileLookupProps {
   onUserFound?: (userData: any) => void;
@@ -15,18 +14,23 @@ const MobileLookup: React.FC<MobileLookupProps> = ({
   className = ""
 }) => {
   const [mobileNumber, setMobileNumber] = useState('');
-  const { searchByMobile, loading, error, userData } = useSheets();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [userData, setUserData] = useState<any | null>(null);
 
   const handleSearch = async () => {
     if (!mobileNumber.trim()) return;
     
-    const result = await searchByMobile(mobileNumber);
-    
-    if (result.success && result.data) {
-      onUserFound?.(result.data);
-    } else {
-      onError?.(result.error || 'User not found');
-    }
+    setLoading(true);
+    setError(null);
+    // No backend now; simulate not found
+    setTimeout(() => {
+      setLoading(false);
+      setUserData(null);
+      const message = 'Lookup disabled';
+      setError(message);
+      onError?.(message);
+    }, 400);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

@@ -33,7 +33,7 @@ export function WalkerConcernPage({ onBack, onSubmit }: WalkerConcernPageProps) 
   };
 
   const handleSubmit = () => {
-    // Here you would typically send the concern data to your backend/Google Sheets
+    // Here you would typically send the concern data to your backend
     onSubmit();
   };
 
@@ -50,7 +50,7 @@ export function WalkerConcernPage({ onBack, onSubmit }: WalkerConcernPageProps) 
             />
           </div>
           <h1 className="payout-heading text-primary-blue mb-2">
-            Report Concern
+            Not happy with your Payout – Describe your concern
           </h1>
           <p className="text-muted-foreground">
             Let us know what's not right with your payout details

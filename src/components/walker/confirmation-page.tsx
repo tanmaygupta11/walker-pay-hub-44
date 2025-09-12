@@ -50,6 +50,16 @@ export function ConfirmationPage({ onBackToHome }: ConfirmationPageProps) {
                 Back to Home
               </Button>
             </div>
+            
+            {/* Logout button positioned at bottom left */}
+            <div className="fixed bottom-4 left-4">
+              <button 
+                onClick={onBackToHome}
+                className="text-sm text-muted-foreground hover:text-red-600 transition-colors duration-200"
+              >
+                Logout
+              </button>
+            </div>
           </CardContent>
         </Card>
       </div>
