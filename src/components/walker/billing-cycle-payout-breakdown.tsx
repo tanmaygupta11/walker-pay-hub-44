@@ -3,7 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PayoutDetail } from "@/types/walker";
 import { calculateTotalPayout } from "@/data/mockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePayoutData } from "@/hooks/usePayoutData";
+import { PayoutData } from "@/services/payoutService";
 import { 
   Clock, 
   Package, 
@@ -27,6 +29,8 @@ interface BillingCyclePayoutBreakdownProps {
   title?: string;
   showTdsInfo?: boolean;
   feId?: string;
+  useDynamicData?: boolean;
+  spreadsheetId?: string;
 }
 
 interface InfoModalProps {
@@ -59,7 +63,14 @@ function InfoModal({ isOpen, onClose, title, content }: InfoModalProps) {
   );
 }
 
-export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true, feId = "12345" }: BillingCyclePayoutBreakdownProps) {
+export function BillingCyclePayoutBreakdown({ 
+  detail, 
+  title, 
+  showTdsInfo = true, 
+  feId = "12345",
+  useDynamicData = false,
+  spreadsheetId
+}: BillingCyclePayoutBreakdownProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -69,6 +80,16 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
   const [deductionsOpen, setDeductionsOpen] = useState(false);
   const [penaltiesOpen, setPenaltiesOpen] = useState(false);
   const [tdsOpen, setTdsOpen] = useState(false);
+
+  // Dynamic data hook
+  const { payoutData, loading, error, fetchPayoutData } = usePayoutData();
+
+  // Fetch dynamic data when component mounts or feId changes
+  useEffect(() => {
+    if (useDynamicData && feId && spreadsheetId) {
+      fetchPayoutData(feId, { spreadsheetId });
+    }
+  }, [useDynamicData, feId, spreadsheetId, fetchPayoutData]);
   
   const openModal = (title: string, content: React.ReactNode) => {
     setModalTitle(title);
@@ -187,12 +208,15 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
     </div>
   );
 
+  // Get data source (dynamic or static)
+  const dataSource = useDynamicData && payoutData ? payoutData : detail;
+  
   // Billing Cycle specific calculations
-  const totalRewards = detail.otPayout + detail.walkerOrderFulfilment + detail.festiveIncentives;
-  const totalDeductions = detail.assetDeduction;
-  const totalPenalties = detail.cancellationAmount + detail.walkerLateLogin;
-  const salaryAfterTDS = detail.tdsApplicable ? detail.basePayout - detail.tdsAmount : detail.basePayout;
-  const totalPayout = 23960; // Updated to ₹23960 as requested
+  const totalRewards = (dataSource.otPayout || 0) + (dataSource.walkerOrderFulfilment || 0) + (dataSource.festiveIncentives || 0);
+  const totalDeductions = dataSource.assetDeduction || 0;
+  const totalPenalties = (dataSource.cancellationAmount || 0) + (dataSource.walkerLateLogin || 0);
+  const salaryAfterTDS = dataSource.tdsApplicable ? (dataSource.basePayout || 0) - (dataSource.tdsAmount || 0) : (dataSource.basePayout || 0);
+  const totalPayout = useDynamicData && payoutData ? payoutData.totalPayout : 23960;
 
   return (
     <div className="space-y-6">
@@ -200,6 +224,12 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
         <Card className="card-elevated">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl text-primary">{title}</CardTitle>
+            {useDynamicData && loading && (
+              <p className="text-sm text-gray-500 mt-2">Loading payout data...</p>
+            )}
+            {useDynamicData && error && (
+              <p className="text-sm text-red-500 mt-2">Error: {error}</p>
+            )}
           </CardHeader>
         </Card>
       )}
@@ -237,8 +267,9 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
             <div className="flex items-center gap-3">
               <Calculator className="h-5 w-5 text-blue-600" />
               <span className="font-medium">Base Payout</span>
+              {loading && <span className="text-xs text-gray-500">Loading...</span>}
             </div>
-            <span className="font-bold text-blue-600">₹{detail.basePayout.toLocaleString()}</span>
+            <span className="font-bold text-blue-600">₹{(dataSource.basePayout || 0).toLocaleString()}</span>
           </div>
 
           {/* Rewards Collapsible */}
@@ -283,35 +314,35 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                     <Timer className="h-4 w-4 text-orange-500" />
                     <span className="text-sm">OT Payout</span>
                   </div>
-                  <span className="text-sm font-semibold text-green-600">₹{detail.otPayout.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-green-600">₹{(dataSource.otPayout || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
                     <Package className="h-4 w-4 text-blue-500" />
                     <span className="text-sm">Walker Order Fulfilment</span>
                   </div>
-                  <span className="text-sm font-semibold text-green-600">₹{detail.walkerOrderFulfilment.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-green-600">₹{(dataSource.walkerOrderFulfilment || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-purple-500" />
                     <span className="text-sm">100% On-time login</span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-500">NA</span>
+                  <span className="text-sm font-semibold text-gray-500">₹{(dataSource.onTimeLogin || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
                     <Target className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Best Ranked Station Reward</span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-500">NA</span>
+                  <span className="text-sm font-semibold text-gray-500">₹{(dataSource.bestRankedStationReward || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
                     <Gift className="h-4 w-4 text-pink-500" />
                     <span className="text-sm">Festive Incentives</span>
                   </div>
-                  <span className="text-sm font-semibold text-green-600">₹{detail.festiveIncentives.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-green-600">₹{(dataSource.festiveIncentives || 0).toLocaleString()}</span>
                 </div>
               </div>
             </CollapsibleContent>
@@ -359,7 +390,7 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                     <AlertTriangle className="h-4 w-4 text-orange-500" />
                     <span className="text-sm">Assets Deduction Amount</span>
                   </div>
-                  <span className="text-sm font-semibold text-orange-600">-₹{detail.assetDeduction.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-orange-600">-₹{(dataSource.assetDeduction || 0).toLocaleString()}</span>
                 </div>
               </div>
             </CollapsibleContent>
@@ -404,14 +435,14 @@ export function BillingCyclePayoutBreakdown({ detail, title, showTdsInfo = true,
                     <XCircle className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Cancellation Amount</span>
                   </div>
-                  <span className="text-sm font-semibold text-red-600">-₹{detail.cancellationAmount.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-red-600">-₹{(dataSource.cancellationAmount || 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
                     <AlertCircle className="h-4 w-4 text-red-500" />
                     <span className="text-sm">Walker late login</span>
                   </div>
-                  <span className="text-sm font-semibold text-red-600">-₹{detail.walkerLateLogin.toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-red-600">-₹{(dataSource.walkerLateLogin || 0).toLocaleString()}</span>
                 </div>
               </div>
             </CollapsibleContent>
