@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Home } from "lucide-react";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface ConfirmationPageProps {
   onBackToHome: () => void;
@@ -14,7 +15,7 @@ export function ConfirmationPage({ onBackToHome }: ConfirmationPageProps) {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ChevronLeft, MessageSquare } from "lucide-react";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface WalkerConcernPageProps {
   onBack: () => void;
@@ -44,7 +45,7 @@ export function WalkerConcernPage({ onBack, onSubmit }: WalkerConcernPageProps) 
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

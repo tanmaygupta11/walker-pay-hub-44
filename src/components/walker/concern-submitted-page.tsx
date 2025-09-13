@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface ConcernSubmittedPageProps {
   onBackToHome: () => void;
@@ -14,7 +15,7 @@ export function ConcernSubmittedPage({ onBackToHome }: ConcernSubmittedPageProps
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

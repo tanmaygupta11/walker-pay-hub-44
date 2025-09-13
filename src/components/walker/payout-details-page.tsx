@@ -8,6 +8,7 @@ import { Calendar, ChevronLeft, User, Hash, Phone, MapPin } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import zomatoLogo from "@/assets/zomato-logo.png";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as DayPicker } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -85,7 +86,7 @@ export function PayoutDetailsPage({ onBack, onViewDaywise, onProceed, onNotSatis
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

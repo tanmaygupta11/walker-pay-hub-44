@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle, XCircle, ChevronLeft, MessageSquare } from "lucide-react";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface VerificationDialogProps {
   onBack: () => void;
@@ -50,7 +51,7 @@ export function VerificationDialog({ onBack, onYes, onConcernSubmitted }: Verifi
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

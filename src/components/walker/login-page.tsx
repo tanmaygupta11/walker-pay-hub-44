@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Smartphone, Shield } from "lucide-react";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface LoginPageProps {
   onLoginSuccess: (walkerData: any) => void;
@@ -49,7 +50,7 @@ export function LoginPage({ onLoginSuccess }: LoginPageProps) {
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />

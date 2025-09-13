@@ -8,6 +8,7 @@ import { CalendarIcon, ChevronLeft } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { MOCK_DAYWISE_DATA } from "@/data/mockData";
+import zomatoLogo from "@/assets/zomato-logo.png";
 
 interface DaywiseDetailsPageProps {
   onBack?: () => void;
@@ -43,7 +44,7 @@ export function DaywiseDetailsPage({ onBack, onBackWithState, onProceed }: Daywi
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
-              src="/src/assets/zomato-logo.png" 
+              src={zomatoLogo} 
               alt="Zomato Logo" 
               className="h-12 w-auto"
             />
