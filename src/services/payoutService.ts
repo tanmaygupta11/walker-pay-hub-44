@@ -28,6 +28,7 @@ export interface PayoutResponse {
   error?: string;
   code?: string;
   timestamp?: string;
+  message?: string;
 }
 
 export interface PayoutServiceConfig {

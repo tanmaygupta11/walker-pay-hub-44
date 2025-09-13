@@ -213,9 +213,9 @@ export function BillingCyclePayoutBreakdown({
   
   // Billing Cycle specific calculations
   const totalRewards = (dataSource.otPayout || 0) + (dataSource.walkerOrderFulfilment || 0) + (dataSource.festiveIncentives || 0);
-  const totalDeductions = dataSource.assetDeduction || 0;
+  const totalDeductions = 'assetDeduction' in dataSource ? (dataSource as PayoutDetail).assetDeduction : 0;
   const totalPenalties = (dataSource.cancellationAmount || 0) + (dataSource.walkerLateLogin || 0);
-  const salaryAfterTDS = dataSource.tdsApplicable ? (dataSource.basePayout || 0) - (dataSource.tdsAmount || 0) : (dataSource.basePayout || 0);
+  const salaryAfterTDS = 'tdsApplicable' in dataSource && (dataSource as PayoutDetail).tdsApplicable ? (dataSource.basePayout || 0) - ((dataSource as PayoutDetail).tdsAmount || 0) : (dataSource.basePayout || 0);
   const totalPayout = useDynamicData && payoutData ? payoutData.totalPayout : 23960;
 
   return (
@@ -275,16 +275,22 @@ export function BillingCyclePayoutBreakdown({
           {/* Rewards Collapsible */}
           <Collapsible open={rewardsOpen} onOpenChange={setRewardsOpen}>
             <CollapsibleTrigger asChild>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 cursor-pointer transition-colors">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 cursor-pointer transition-all duration-300 ease-in-out group">
                 <div className="flex items-center gap-3">
-                  <Award className="h-5 w-5 text-green-600" />
+                  <Award className="h-5 w-5 text-green-600 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-medium">Total Rewards</span>
-                  {rewardsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                  <ChevronDown className={`h-4 w-4 text-gray-500 transition-all duration-300 ease-in-out ${rewardsOpen ? 'rotate-180' : 'rotate-0'}`} />
                 </div>
                 <span className="font-bold text-green-600">+₹{totalRewards.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
+            <CollapsibleContent className={`
+              mt-2 ml-8 space-y-2 overflow-hidden transition-all duration-300 ease-in-out
+              ${rewardsOpen 
+                ? 'max-h-96 opacity-100 transform translate-y-0' 
+                : 'max-h-0 opacity-0 transform -translate-y-2'
+              }
+            `}>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Rewards Details</span>
@@ -328,7 +334,7 @@ export function BillingCyclePayoutBreakdown({
                     <Clock className="h-4 w-4 text-purple-500" />
                     <span className="text-sm">100% On-time login</span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-500">₹{(dataSource.onTimeLogin || 0).toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-gray-500">₹{('onTimeLoginReward' in dataSource ? (dataSource as PayoutDetail).onTimeLoginReward : 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-white rounded border">
                   <div className="flex items-center gap-2">
@@ -351,16 +357,22 @@ export function BillingCyclePayoutBreakdown({
           {/* Deductions Collapsible */}
           <Collapsible open={deductionsOpen} onOpenChange={setDeductionsOpen}>
             <CollapsibleTrigger asChild>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 border border-orange-200 hover:bg-orange-100 cursor-pointer transition-colors">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 border border-orange-200 hover:bg-orange-100 cursor-pointer transition-all duration-300 ease-in-out group">
                 <div className="flex items-center gap-3">
-                  <TrendingDown className="h-5 w-5 text-orange-600" />
+                  <TrendingDown className="h-5 w-5 text-orange-600 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-medium">Total Deductions</span>
-                  {deductionsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                  <ChevronDown className={`h-4 w-4 text-gray-500 transition-all duration-300 ease-in-out ${deductionsOpen ? 'rotate-180' : 'rotate-0'}`} />
                 </div>
                 <span className="font-bold text-orange-600">-₹{totalDeductions.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
+            <CollapsibleContent className={`
+              mt-2 ml-8 space-y-2 overflow-hidden transition-all duration-300 ease-in-out
+              ${deductionsOpen 
+                ? 'max-h-96 opacity-100 transform translate-y-0' 
+                : 'max-h-0 opacity-0 transform -translate-y-2'
+              }
+            `}>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Deductions Details</span>
@@ -390,7 +402,7 @@ export function BillingCyclePayoutBreakdown({
                     <AlertTriangle className="h-4 w-4 text-orange-500" />
                     <span className="text-sm">Assets Deduction Amount</span>
                   </div>
-                  <span className="text-sm font-semibold text-orange-600">-₹{(dataSource.assetDeduction || 0).toLocaleString()}</span>
+                  <span className="text-sm font-semibold text-orange-600">-₹{('assetDeduction' in dataSource ? (dataSource as PayoutDetail).assetDeduction : 0).toLocaleString()}</span>
                 </div>
               </div>
             </CollapsibleContent>
@@ -399,16 +411,22 @@ export function BillingCyclePayoutBreakdown({
           {/* Penalties Collapsible */}
           <Collapsible open={penaltiesOpen} onOpenChange={setPenaltiesOpen}>
             <CollapsibleTrigger asChild>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 cursor-pointer transition-colors">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 cursor-pointer transition-all duration-300 ease-in-out group">
                 <div className="flex items-center gap-3">
-                  <XCircle className="h-5 w-5 text-red-600" />
+                  <XCircle className="h-5 w-5 text-red-600 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-medium">Total Penalties</span>
-                  {penaltiesOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                  <ChevronDown className={`h-4 w-4 text-gray-500 transition-all duration-300 ease-in-out ${penaltiesOpen ? 'rotate-180' : 'rotate-0'}`} />
                 </div>
                 <span className="font-bold text-red-600">-₹{totalPenalties.toLocaleString()}</span>
               </div>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 ml-8 space-y-2 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up transition-all">
+            <CollapsibleContent className={`
+              mt-2 ml-8 space-y-2 overflow-hidden transition-all duration-300 ease-in-out
+              ${penaltiesOpen 
+                ? 'max-h-96 opacity-100 transform translate-y-0' 
+                : 'max-h-0 opacity-0 transform -translate-y-2'
+              }
+            `}>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-medium">Penalties Details</span>
@@ -452,11 +470,11 @@ export function BillingCyclePayoutBreakdown({
           {showTdsInfo && (
             <Collapsible open={tdsOpen} onOpenChange={setTdsOpen}>
               <CollapsibleTrigger asChild>
-                <div className="flex items-center justify-between p-3 rounded-lg border border-purple-200 hover:bg-purple-50 cursor-pointer transition-colors" style={{backgroundColor: '#bcabff'}}>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-purple-50 border border-purple-200 hover:bg-purple-100 cursor-pointer transition-all duration-300 ease-in-out group">
                   <div className="flex items-center gap-3">
-                    <Calculator className="h-5 w-5 text-purple-600" />
+                    <Calculator className="h-5 w-5 text-purple-600 transition-transform duration-300 group-hover:scale-110" />
                     <span className="font-medium">TDS</span>
-                    {tdsOpen ? <ChevronDown className="h-4 w-4 text-gray-500" /> : <ChevronRight className="h-4 w-4 text-gray-500" />}
+                    <ChevronDown className={`h-4 w-4 text-gray-500 transition-all duration-300 ease-in-out ${tdsOpen ? 'rotate-180' : 'rotate-0'}`} />
                     {detail.tdsApplicable && (
                       <Badge className="text-white ml-2" style={{backgroundColor: '#3A11BC', fontSize: '10px'}}>
                         TDS Applicable
